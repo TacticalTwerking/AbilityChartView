@@ -2,7 +2,7 @@
 A custom view that display multiple attributes by a polygon shape
 
 # Review
-![image](https://github.com/TacticalTwerking/PolygonProgressView/blob/master/art/device-2016-06-27-145918.png)
+![image](https://github.com/TacticalTwerking/PolygonProgressView/blob/master/art/screenrecorder.20190916130848_5.gif)
 
 # Simply Usage
 
