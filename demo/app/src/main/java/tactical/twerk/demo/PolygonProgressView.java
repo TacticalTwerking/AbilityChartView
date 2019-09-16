@@ -18,8 +18,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import android.view.animation.LinearInterpolator;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -30,8 +32,8 @@ import java.util.Random;
 public class PolygonProgressView extends View {
 
 
-    private static final long ANIMATION_DURATION = 800l;
-    private static final long ANIMATION_DELAY = 50l;
+    private static final long ANIMATION_DURATION = 800L;
+    private static final long ANIMATION_DELAY = 50L;
     private int mSize = -1;
     private int mCirclePadding = -1;
     private int mViewCenter = -1;
@@ -41,8 +43,9 @@ public class PolygonProgressView extends View {
     private int mHighLightPadding = 5;
     private int mRotateOffset = 90;
     private float mPieces = 0;
-    private float mMinimalValuesPercentage = .5f;
+    private float mMinimalValuesPercentage = .4f;
     private float[] mProgressValues;
+    private float[] mLatestProgressValues;
     private float[] mAnimationProgress;
     private String[] mLabels = new String[]{};
     private Paint mPaintCircle;
@@ -77,66 +80,77 @@ public class PolygonProgressView extends View {
         if (mAnimationRunning){
             return;
         }
+        mLatestProgressValues = mSides == side?mProgressValues:null;
         mSides = side;
         mProgressValues = values;
-        mPieces = mSides > 0 ? 360 / mSides : 0;
+        mPieces = mSides > 0 ? 360f / mSides : 0;
     }
 
     public void initial(int side,float []values,String []labels){
         if (mAnimationRunning){
             return;
         }
+        mLatestProgressValues = mSides == side?mProgressValues:null;
         mSides = side;
         mProgressValues = values;
         mLabels = labels;
-        mPieces = mSides > 0 ? 360 / mSides : 0;
+        mPieces = mSides > 0 ? 360f / mSides : 0;
     }
+
 
     public void animateProgress() {
 
         if (mAnimationRunning) {
             return;
         }
-
-        mAnimationProgress = new float[mSides];
+        mAnimationProgress = null!=mLatestProgressValues?mLatestProgressValues:new float[mSides];
         for (int i = 0; i < mSides; i++) {
-            mAnimationRunning = true;
-            final int finalI = i;
-            ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-            animator.setDuration(ANIMATION_DURATION);
-            animator.setInterpolator(new AccelerateDecelerateInterpolator());
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    mAnimationProgress[finalI] = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
-            animator.setStartDelay(ANIMATION_DELAY * i);
-            if (finalI== mSides -1){
-                animator.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {}
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mAnimationRunning = false;
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        mAnimationRunning = false;
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {}
-                });
-            }
-            animator.start();
+            doAnimate(i);
         }
-
     }
 
+
+
+
+    private void doAnimate( final int progress) {
+        mAnimationRunning = true;
+        if (null==mLatestProgressValues){
+            mLatestProgressValues = new float[mSides];
+           mLatestProgressValues[progress] = 0;
+        }
+        ValueAnimator animator = ValueAnimator.ofFloat(mLatestProgressValues[progress],mProgressValues[progress]);
+        animator.setDuration(ANIMATION_DURATION);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mAnimationProgress[progress] = (float) animation.getAnimatedValue();
+
+                invalidate();
+            }
+        });
+        animator.setStartDelay(ANIMATION_DELAY * progress);
+        if (progress== mSides -1){
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {}
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mAnimationRunning = false;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    mAnimationRunning = false;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {}
+            });
+        }
+        animator.start();
+    }
 
     private void init() {
 
@@ -174,10 +188,7 @@ public class PolygonProgressView extends View {
 
         for (int i = 0; i < mSides; i++) {
             double angle = ((Math.PI * 2 / mSides) * i) - (Math.toRadians(mRotateOffset));
-
             drawInnerLines(canvas,angle);
-            drawArcs(canvas,i);
-            //DrawNode belong here
             drawLabels(canvas,i,angle);
         }
         drawNodes(canvas);
@@ -224,7 +235,7 @@ public class PolygonProgressView extends View {
 
         int maxLength = mActuallyRadius;
 
-        String strNumericValues = new DecimalFormat("##").format(mProgressValues[i] * mAnimationProgress[i] * 100);
+        String strNumericValues = new DecimalFormat("##").format(mAnimationProgress[i] * 100);
 
         Rect textBoundLabel = new Rect();
         Rect textBoundNumeric = new Rect();
@@ -237,9 +248,10 @@ public class PolygonProgressView extends View {
         float x = (int) (Math.cos(angle) * actuallyValues + mViewCenter);
         float y = (int) (Math.sin(angle) * actuallyValues + mViewCenter);
 
-        canvas.drawText(mLabels[i], x - (textBoundLabel.width() / 2), y + (textBoundLabel.height() / 2), mPaintLabels);
-
-        canvas.drawText(strNumericValues, x - (textBoundNumeric.width() / 2), y - (textBoundLabel.height() / 2), mPaintLabels);
+        //Draw Label
+        canvas.drawText(mLabels[i], x - (textBoundLabel.width() / 2f), y + (textBoundLabel.height() / 2f), mPaintLabels);
+        //Draw Progress Value
+        canvas.drawText(strNumericValues, x - (textBoundNumeric.width() / 2f), y - (textBoundLabel.height() / 2f), mPaintLabels);
 
     }
 
@@ -264,9 +276,9 @@ public class PolygonProgressView extends View {
         }
         for (int i = 0; i < mSides; i++) {
 
-            float actuallyValues = mProgressValues[i] * maxHill * mAnimationProgress[i];
+            float actuallyValues = maxHill * mAnimationProgress[i];
             if (minimalValues > 0) {
-                actuallyValues = minimalValues + (maxHill - minimalValues) * mProgressValues[i] * mAnimationProgress[i];
+                actuallyValues = minimalValues + (maxHill - minimalValues)  * mAnimationProgress[i];
             }
 
             double angle = ((Math.PI * 2 / mSides) * i) - (Math.toRadians(mRotateOffset));
@@ -300,13 +312,12 @@ public class PolygonProgressView extends View {
             mProgressValues = new float[mSides];
             mAnimationProgress = new float[mSides];
 
-
             mPaintLabels = new Paint(mPaintInnerLines);
             mPaintLabels.setTextSize(mSize / 30);
             mPaintLabels.setColor(Color.BLACK);
             mPaintLabels.setStyle(Paint.Style.FILL);
             mPaintLabels.setAntiAlias(true);
-            mPieces = mSides > 0 ? 360 / mSides : 0;
+            mPieces = mSides > 0 ? 360f / mSides : 0;
             mBitmapAvatar = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
         }
