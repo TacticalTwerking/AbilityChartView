@@ -18,6 +18,9 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 
 import java.text.DecimalFormat
+import kotlin.math.cos
+import kotlin.math.min
+import kotlin.math.sin
 
 /**
  * Created by TacticalTwerking on 16/6/23.
@@ -270,8 +273,8 @@ class AbilityChartView : View {
 
         val actuallyValues = (maxLength + textBoundLabel.width()).toFloat()
 
-        val x = (Math.cos(angle) * actuallyValues + mViewCenter).toInt().toFloat()
-        val y = (Math.sin(angle) * actuallyValues + mViewCenter).toInt().toFloat()
+        val x = (cos(angle) * actuallyValues + mViewCenter).toInt().toFloat()
+        val y = (sin(angle) * actuallyValues + mViewCenter).toInt().toFloat()
 
         //Draw Label
         canvas.drawText(
@@ -288,8 +291,8 @@ class AbilityChartView : View {
 
     private fun drawInnerLines(canvas: Canvas, angle: Double) {
         val actuallyValues = mActuallyRadius.toFloat()
-        val x = (Math.cos(angle) * actuallyValues + mViewCenter).toInt().toFloat()
-        val y = (Math.sin(angle) * actuallyValues + mViewCenter).toInt().toFloat()
+        val x = (cos(angle) * actuallyValues + mViewCenter).toInt().toFloat()
+        val y = (sin(angle) * actuallyValues + mViewCenter).toInt().toFloat()
         canvas.drawLine(mViewCenter.toFloat(), mViewCenter.toFloat(), x, y, mPaintGrid!!)
     }
 
@@ -314,8 +317,8 @@ class AbilityChartView : View {
 
             val angle = Math.PI * 2 / mSides * i - Math.toRadians(mRotateOffset.toDouble())
 
-            val x = (Math.cos(angle) * actuallyValues + mViewCenter).toInt().toFloat()
-            val y = (Math.sin(angle) * actuallyValues + mViewCenter).toInt().toFloat()
+            val x = (cos(angle) * actuallyValues + mViewCenter).toInt().toFloat()
+            val y = (sin(angle) * actuallyValues + mViewCenter).toInt().toFloat()
 
             if (i == 0) {
                 startX = x
@@ -348,7 +351,7 @@ class AbilityChartView : View {
 
     private fun initProperties() {
         if (mSize == -1) {
-            mSize = Math.min(height, width)
+            mSize = min(height, width)
             mCirclePadding = mSize / 6
             mViewCenter = mSize / 2
             mActuallyRadius = mViewCenter - mCirclePadding
@@ -356,7 +359,7 @@ class AbilityChartView : View {
             mAnimationProgress = FloatArray(mSides)
 
             mPaintLabels = Paint(mPaintGrid)
-            mPaintLabels!!.setTextSize(if (mLabelTxtSize == -1f) mSize / 30f else mLabelTxtSize)
+            mPaintLabels!!.textSize = if (mLabelTxtSize == -1f) mSize / 30f else mLabelTxtSize
             mPaintLabels!!.color = if (mLabelTxtColor == -1) Color.BLACK else mLabelTxtColor
             mPaintLabels!!.style = Paint.Style.FILL
             mPaintLabels!!.isAntiAlias = true
