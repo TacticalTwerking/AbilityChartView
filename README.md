@@ -19,7 +19,7 @@ A custom view that display multiple attributes by a polygon shape
 
 
 
-## Customizations your view
+## Stylize your view
 ```xml
 <io.github.tacticaltwerking.abilitychartview.AbilityChartView
         android:id="@+id/ppv"
