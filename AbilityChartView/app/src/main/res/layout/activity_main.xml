@@ -8,10 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="tactical.twerk.abilitychartview.MainActivity"
+    tools:context=".MainActivity"
     >
 
-    <tactical.twerk.abilitychartview.AbilityChartView
+    <io.github.tacticaltwerking.abilitychartview.AbilityChartView
         android:id="@+id/ppv"
         app:acv_polygon_color = "@color/defaultPolygonColor"
         app:acv_circle_color = "@color/defaultCircleColor"
