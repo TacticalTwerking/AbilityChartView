@@ -21,7 +21,7 @@ A custom view that display multiple attributes by a polygon shape
 
 ## Customizations your view
 ```xml
-<tactical.twerk.abilitychartview.AbilityChartView
+<io.github.tacticaltwerking.abilitychartview.AbilityChartView
         android:id="@+id/ppv"
         app:acv_polygon_color = "@color/defaultPolygonColor"
         app:acv_circle_color = "@color/defaultCircleColor"
