@@ -4,6 +4,22 @@ A custom view that display multiple attributes/abilities by a polygon shape
 # Review
 ![image](https://github.com/TacticalTwerking/PolygonProgressView/blob/master/art/GifArt.gif)
 
+
+# Gradle dependency 
+
+Add
+        ```
+        jcenter()
+        ```
+to your repositories
+
+And
+        ```
+        implementation 'io.github.TacticalTwerking:AbilityChartView:0.1.1'
+        ```
+to your dependencies 
+
+
 # Simply Usage
 
 1.Prepering your values
@@ -19,7 +35,7 @@ A custom view that display multiple attributes/abilities by a polygon shape
 
 
 
-## Stylize your view
+# Stylize Your View
 ```xml
 <io.github.tacticaltwerking.abilitychartview.AbilityChartView
         android:id="@+id/ppv"
