@@ -181,8 +181,7 @@ class AbilityChartView : View {
         mLabelTxtSize =
             a.getDimensionPixelSize(R.styleable.AbilityChartView_acv_label_txt_size, -1).toFloat()
         mLabelTxtColor = a.getColor(
-            R.styleable.AbilityChartView_acv_label_txt_color,
-            resources.getColor(android.R.color.black,context.theme)
+            R.styleable.AbilityChartView_acv_label_txt_color,Color.BLACK
         )
         mShowGrid = a.getBoolean(R.styleable.AbilityChartView_acv_show_grid, true)
         a.recycle()
@@ -237,7 +236,8 @@ class AbilityChartView : View {
 
     private fun drawAvatar(canvas: Canvas) {
 
-        mPaintAvatar!!.setShadowLayer(10f, 10f, 10f, android.R.color.black)
+        //Draw shadow
+        //mPaintAvatar!!.setShadowLayer(2f, 5f, 5f, Color.GRAY)
 
         canvas.drawCircle(
             mViewCenter.toFloat(), mViewCenter.toFloat(),
