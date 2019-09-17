@@ -1,4 +1,4 @@
-package tactical.twerk.demo;
+package tactical.twerk.abilitychartview;
 
 
 import android.animation.Animator;
@@ -18,18 +18,15 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import android.view.animation.LinearInterpolator;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by TacticalTwerking on 16/6/23.
  * GitHub   https://github.com/TacticalTwerking
  */
-public class PolygonProgressView extends View {
+public class AbilityChartView extends View {
 
 
     private static final long ANIMATION_DURATION = 800L;
@@ -55,23 +52,23 @@ public class PolygonProgressView extends View {
     private Paint mPaintLabels;
     private boolean mAnimationRunning = false;
 
-    public PolygonProgressView(Context context) {
+    public AbilityChartView(Context context) {
         super(context);
         init();
     }
 
-    public PolygonProgressView(Context context, AttributeSet attrs) {
+    public AbilityChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PolygonProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AbilityChartView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public PolygonProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AbilityChartView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -211,22 +208,22 @@ public class PolygonProgressView extends View {
     }
 
 
-    private void drawArcs(Canvas canvas,int i) {
-
-        List<Integer> maxValues = getMaxValues(mProgressValues);
-        RectF rectF = new RectF(mCirclePadding, mCirclePadding, (mActuallyRadius * 2) + mCirclePadding, (mActuallyRadius * 2) + mCirclePadding);
-        if (maxValues.size()>i){
-            int sweepAngle = (int) (mPieces * mAnimationProgress[maxValues.get(i)]);
-            int startAngle = (int) ((maxValues.get(i) * mPieces) - (sweepAngle / 2) - mRotateOffset);
-            if (mSides == 0) {
-                mHighLightPadding = 0;
-            }
-
-            if (sweepAngle != 0) {
-                canvas.drawArc(rectF, startAngle + mHighLightPadding, sweepAngle - mHighLightPadding, false, mPaintArcs);
-            }
-        }
-    }
+    //private void drawArcs(Canvas canvas,int i) {
+    //
+    //    List<Integer> maxValues = getMaxValues(mProgressValues);
+    //    RectF rectF = new RectF(mCirclePadding, mCirclePadding, (mActuallyRadius * 2) + mCirclePadding, (mActuallyRadius * 2) + mCirclePadding);
+    //    if (maxValues.size()>i){
+    //        int sweepAngle = (int) (mPieces * mAnimationProgress[maxValues.get(i)]);
+    //        int startAngle = (int) ((maxValues.get(i) * mPieces) - (sweepAngle / 2) - mRotateOffset);
+    //        if (mSides == 0) {
+    //            mHighLightPadding = 0;
+    //        }
+    //
+    //        if (sweepAngle != 0) {
+    //            canvas.drawArc(rectF, startAngle + mHighLightPadding, sweepAngle - mHighLightPadding, false, mPaintArcs);
+    //        }
+    //    }
+    //}
 
     private void drawLabels(Canvas canvas,int i,double angle) {
         if (null == mLabels || mLabels.length != mSides) {
@@ -322,29 +319,29 @@ public class PolygonProgressView extends View {
 
         }
     }
-
-    private List<Integer> getMaxValues(float[] source) {
-        List<Integer> maxArrayIndex = new ArrayList<>();
-        float maxValue = source[0];
-        int maxValuesIndex = 0;
-        boolean notUnique = false;
-        for (int i = 1; i < source.length; i++) {
-            if (maxValue < source[i]) {
-                maxValue = source[i];
-                maxValuesIndex = i;
-            } else if (maxValue == source[i]) {
-                notUnique = true;
-            }
-        }
-        if (notUnique) {
-            for (int i = 0; i < source.length; i++) {
-                if (maxValue == source[i]) {
-                    maxArrayIndex.add(i);
-                }
-            }
-        } else {
-            maxArrayIndex.add(maxValuesIndex);
-        }
-        return maxArrayIndex;
-    }
+    //
+    //private List<Integer> getMaxValues(float[] source) {
+    //    List<Integer> maxArrayIndex = new ArrayList<>();
+    //    float maxValue = source[0];
+    //    int maxValuesIndex = 0;
+    //    boolean notUnique = false;
+    //    for (int i = 1; i < source.length; i++) {
+    //        if (maxValue < source[i]) {
+    //            maxValue = source[i];
+    //            maxValuesIndex = i;
+    //        } else if (maxValue == source[i]) {
+    //            notUnique = true;
+    //        }
+    //    }
+    //    if (notUnique) {
+    //        for (int i = 0; i < source.length; i++) {
+    //            if (maxValue == source[i]) {
+    //                maxArrayIndex.add(i);
+    //            }
+    //        }
+    //    } else {
+    //        maxArrayIndex.add(maxValuesIndex);
+    //    }
+    //    return maxArrayIndex;
+    //}
 }

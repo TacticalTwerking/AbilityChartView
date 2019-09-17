@@ -1,6 +1,6 @@
-package tactical.twerk.demo;
+package tactical.twerk.abilitychartview;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -8,27 +8,27 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    PolygonProgressView mPpv;
-    Button mBtnSwitch;
-    Button mBtnLess,mBtnMore;
-    EditText mEtSides;
-    int mSides = -1;
+    private AbilityChartView mPpv;
+    private Button mBtnSwitch;
+    private Button mBtnLess,mBtnMore;
+    private EditText mEtSides;
+    private int mSides = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPpv = (PolygonProgressView) findViewById(R.id.ppv);
-        mBtnSwitch = (Button) findViewById(R.id.btnSwitch);
-        mBtnLess = (Button) findViewById(R.id.btn_less);
-        mBtnMore = (Button) findViewById(R.id.btn_more);
-        mEtSides = (EditText) findViewById(R.id.et_number);
+        mPpv = findViewById(R.id.ppv);
+        mBtnSwitch =  findViewById(R.id.btnSwitch);
+        mBtnLess = findViewById(R.id.btn_less);
+        mBtnMore = findViewById(R.id.btn_more);
+        mEtSides = findViewById(R.id.et_number);
         mBtnLess.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 if (mSides==-1 || mSides<=3){

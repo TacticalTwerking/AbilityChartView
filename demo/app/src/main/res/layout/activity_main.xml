@@ -7,13 +7,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="tactical.twerk.demo.MainActivity">
+    tools:context="tactical.twerk.abilitychartview.MainActivity">
 
-    <tactical.twerk.demo.PolygonProgressView
+    <tactical.twerk.abilitychartview.AbilityChartView
         android:id="@+id/ppv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+
+
+
+    <LinearLayout
+        android:layout_above="@+id/btnSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_less"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="-" />
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:inputType="number"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/btn_more"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="+" />
+    </LinearLayout>
     <Button
         android:id="@+id/btnSwitch"
         android:layout_alignParentBottom="true"
