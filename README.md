@@ -1,4 +1,4 @@
-# PolygonProgressView
+# AbilityChartView
 A custom view that display multiple attributes by a polygon shape
 
 # Review
