@@ -28,10 +28,10 @@ to your dependencies
         float [] values = new float[]{1,.3f,1...};
 2.Initializing values
 
-        PolygonProgressView.initial(14,values,labels);
+        AbilityChartView.initial(14,values,labels);
 3.Animate it!
 
-        PolygonProgressView.animateProgress();
+        AbilityChartView.animateProgress();
 
 
 
