@@ -1,5 +1,5 @@
 # AbilityChartView
-A custom view that display multiple attributes by a polygon shape
+A custom view that display multiple attributes/abilities by a polygon shape
 
 # Review
 ![image](https://github.com/TacticalTwerking/PolygonProgressView/blob/master/art/GifArt.gif)
