@@ -39,13 +39,13 @@ dependencies {
 
 
 publish {
-    userOrg = 'freshavocado' //bintray账户下某个组织id
-    groupId = 'io.github.TacticalTwerking' //maven仓库下库的包名，一般为模块包名
-    artifactId = 'AbilityChartView' //项目名称
-    repoName = 'maven' //远程仓库名
-    publishVersion = '0.1.1' //版本号
-    desc = 'A custom view that display multiple attributes/abilities by a polygon shape' //项目介绍，可以不写
-    website = 'https://github.com/TacticalTwerking/AbilityChartView' //项目主页，可以不写
+    userOrg =USERORG
+    groupId =GROUPID
+    artifactId =ARTIFACTID
+    repoName =REPONAME
+    publishVersion =PUBLISHVERSION
+    desc =DESC
+    website =WEBSITE
 }
 
 
