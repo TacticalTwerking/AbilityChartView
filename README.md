@@ -35,4 +35,4 @@ A custom view that display multiple attributes by a polygon shape
         app:acv_minimal_value_percentage="40%p"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-```xml
+```
