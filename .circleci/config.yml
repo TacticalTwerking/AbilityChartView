@@ -18,8 +18,8 @@ jobs:
       - checkout
 
       # The next step will run the unit tests
-      - android/run-tests:
-          test-command: ./gradlew lint testDebug --continue
+      #- android/run-tests:
+          #test-command: ./gradlew lint testDebug --continue
 
       # Then start the emulator and run the Instrumentation tests!
       - android/start-emulator-and-run-tests:
